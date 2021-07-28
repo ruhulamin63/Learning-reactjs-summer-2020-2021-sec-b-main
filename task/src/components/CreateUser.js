@@ -1,59 +1,43 @@
-import {useState} from 'react';
-import {users} from '../usersData';
-import {useParams} from 'react-router-dom';
+import { useState } from "react";
 
-const CreateUser = ({status, callback})=> {
+const CreateUser = ({ list, callback }) => {
 
-    const {id:eid}  = useParams();
-    const [newUser, setNewUser] = useState({
-        id: '',
-        name: '',
-        dept: '',
-    });
+    const [user, setUser] = useState({ id: "", name: "", dept: "" });
 
-    const changeUser = (e)=>{
-        const attar = e.target.name;
-        const value = e.target.value;
-        const user = {...newUser, [attar] : value}; 
-        setNewUser(user);
-    }
+    const onInputChange = (e) => {
+            setUser({ ...user, [e.target.name]: e.target.value });
+    };
 
-    const formSubmit=(e)=>{
+    const fromSubmit = (e) => {
         e.preventDefault();
+        list.push(user);
+        callback(list);
+        console.log(list);
+    };
 
-        if(status == 'add'){
-            callback(newUser);
-            setNewUser({
-                id: '',
-                name: '',
-                dept: '',
-            })
-
-        }
-    }
 
     return (
         <div className="form">
-            <form onSubmit={formSubmit}>
+            <form onSubmit={fromSubmit}>
                 <table>
                     <thead></thead>
                     <tbody>
                         <tr>
                             <td>ID</td>
                             <td>
-                                <input type="number" name="id" value={data.id} onChange={changeUser}/> 
+                                <input type="number" name="id" value={user.id} onChange={onInputChange}/> 
                             </td>
                         </tr>
                         <tr>
                             <td>Name</td>
                             <td>
-                                <input type="text" name="name" value={data.name} onChange={changeUser}/> 
+                                <input type="text" name="name" value={user.name} onChange={onInputChange}/> 
                             </td>
                         </tr>
                         <tr>
                             <td>Dept</td>
                             <td>
-                                <input type="text" name="dept" value={data.dept} onChange={changeUser} /> 
+                                <input type="text" name="dept" value={user.dept} onChange={onInputChange}/> 
                             </td>
                         </tr>
                         <tr>

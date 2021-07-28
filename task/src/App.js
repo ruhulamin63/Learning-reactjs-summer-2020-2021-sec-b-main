@@ -4,18 +4,22 @@ import Navbar from './components/Navbar';
 import CreateUser from './components/CreateUser';
 import EditUser from './components/EditUser';
 import {users} from './usersData';
-
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+
 function App() {
-const[myUser,setUsers]=useState(users);
-const deleteCallback=(id)=>{
-  const data =myUser.filter((user)=>user.id !== id);
-  setUsers(data);
-}
-const addUser = (id,name,dept)=>{
-  const data = myUser.concat({id, name, dept});
-  setUsers(data);
-}
+
+  const [user, setUsers] = useState(users);
+  
+  const deletecallback = (id) => {
+    const data = user.filter((myuser) => myuser.id !== id);
+    setUsers(data);
+  };
+  const updatecallback = (list) => {
+    setUsers(list);
+  };
+  const createcallback = (list) => {
+    setUsers(list);
+  };
 
   return (
     <Router>
@@ -26,13 +30,16 @@ const addUser = (id,name,dept)=>{
         </Route>
         <Route path='/userlist'>
           <div >
-            <UserList list={myUser} callback={deleteCallback}/>
+            <UserList list={user} callback={deletecallback} />
           </div>
         </Route>
         <Route path='/Create'>
-            <CreateUser createCallback={addUser}/>
+            <CreateUser list={user} callback={createcallback} />
         </Route>
-        <Route path='/edit/:id' children={<EditUser/>}></Route>
+        <Route path='/edit/:id'  
+            children={<EditUser list={user} callback={updatecallback}/>}>
+        </Route>
+
         <Route path='*'>
           <h3>404 not found</h3>
         </Route>
