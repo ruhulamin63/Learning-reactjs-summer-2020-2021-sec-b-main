@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
+
 
 const CreateUser = ({ list, callback }) => {
 
@@ -8,10 +10,15 @@ const CreateUser = ({ list, callback }) => {
             setUser({ ...user, [e.target.name]: e.target.value });
     };
 
+    const history = useHistory();
+
     const fromSubmit = (e) => {
         e.preventDefault();
         list.push(user);
         callback(list);
+
+        history.push("/UserList");
+
         console.log(list);
     };
 

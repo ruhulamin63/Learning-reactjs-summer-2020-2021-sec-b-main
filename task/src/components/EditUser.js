@@ -1,5 +1,6 @@
 import { useParams, useHistory } from "react-router";
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 
     const EditUser = ({ list, callback }) => {
 
@@ -16,11 +17,16 @@ import { useEffect, useState } from "react";
         setUser(result[id - 1]);
     };
     
+    const history = useHistory(); 
+
     const fromSubmit = (e) => {
         e.preventDefault();
         list = list.filter((myuser) => myuser.id !== user.id);
         list.push(user);
         callback(list);
+
+        history.push("/UserList");
+
         console.log(list);
     };
 
