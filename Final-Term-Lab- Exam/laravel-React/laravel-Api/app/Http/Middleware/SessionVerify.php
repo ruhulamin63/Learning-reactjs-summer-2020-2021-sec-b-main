@@ -16,11 +16,11 @@ class SessionVerify
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->session()->has('email')){
+        if($request->session()->has('username')){
             return $next($request);
         }else{
             $request->session()->flash('msg', 'Invalid request');
-            return redirect('/login');
+            //return redirect('/login');
         }
     }
 }
