@@ -5,47 +5,68 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Register;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class EmpController extends Controller
 {
-    public function index(){
+    public function index()
+    {
 
         $employee = Register::all();
 
         return response()->json([
-            'status'=>200,
-            'employees'=>$employee
+            'status' => 200,
+            'employees' => $employee
         ]);
     }
 
-    public function store(Request $req){
+    public function store(Request $req)
+    {
 
-        $emp = new Register;
+        // $validator = Validator::make($req->all(),[
+        //     'username' => 'requird|max:191',
+        //     'name' => 'requird|max:191',
+        //     'phone' => 'requird|max:11|min:11',
+        //     'password' => 'requird|max:20|min:8',
+        // ]);
 
-        $emp->username = $req->input('username');
-        $emp->name = $req->input('name');
-        $emp->phone = $req->input('phone');
-        $emp->password = $req->input('password');
+        // if ($validator->fails()) {
 
-        $emp->save();
+        //     return response()->json([
+        //         'validate_error' => $validator,
+        //     ]);
+        // } else {
 
-        return response()->json([
-            'status'=>200,
-            'message'=>'Employee Register Added Successfully',
-        ]);
+            $emp = new Register;
+
+            $emp->username = $req->input('username');
+            $emp->name = $req->input('name');
+            $emp->phone = $req->input('phone');
+            $emp->password = $req->input('password');
+
+            $emp->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Employee Register Added Successfully',
+            ]);
+        //}
     }
 
-    public function edit($id){
-        
+    public function edit($id)
+    {
+
         $employee = Register::find($id);
 
         return response()->json([
-            'status'=>200,
-            'employees'=>$employee,
+            'status' => 200,
+            'employees' => $employee,
         ]);
     }
 
-    public function update(Request $req, $id){
+    public function update(Request $req, $id)
+    {
 
         $emp = Register::find($id);
 
@@ -57,19 +78,20 @@ class EmpController extends Controller
         $emp->update();
 
         return response()->json([
-            'status'=>200,
-            'message'=>'Employee Update Successfully',
+            'status' => 200,
+            'message' => 'Employee Update Successfully',
         ]);
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
 
         $student = Register::find($id);
         $student->delete();
 
         return response()->json([
-            'status'=>200,
-            'message'=>'Employee Delete Successfully',
+            'status' => 200,
+            'message' => 'Employee Delete Successfully',
         ]);
     }
 }

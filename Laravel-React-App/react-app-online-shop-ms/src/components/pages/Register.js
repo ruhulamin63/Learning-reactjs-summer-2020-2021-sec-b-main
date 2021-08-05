@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 import swal from 'sweetalert';
 
+
 class Register extends Component{
 
     state = {
@@ -11,6 +12,7 @@ class Register extends Component{
         name:'',
         phone:'',
         password:'',
+       // error_list: [],
     }
 
     handleInput = (e) => {
@@ -40,7 +42,13 @@ class Register extends Component{
                 phone:'',
                 password:'',
             });
+
         }
+        // else{
+        //     this.setState({
+        //         error_list: res.data.validate_error,
+        //     });
+        // }
     }
 
     render(){
@@ -62,18 +70,23 @@ class Register extends Component{
                                     <div className="form-group mb-3">
                                         <lebel>Username</lebel>
                                         <input type="text" name="username" value={this.state.username} className="form-control" onChange={this.handleInput}/>
+                                        {/* <span className="text-danger">{this.state.error_list.username}</span> */}
                                     </div>
                                     <div className="form-group mb-3">
                                         <lebel>Name</lebel>
                                         <input type="text" name="name" value={this.state.name} className="form-control"  onChange={this.handleInput}/>
+                                        {/* <span className="text-danger">{this.state.error_list.name}</span> */}
                                     </div>
+                                    
                                     <div className="form-group mb-3">
                                         <lebel>Phone</lebel>
                                         <input type="text" name="phone" value={this.state.phone} className="form-control"  onChange={this.handleInput}/>
+                                        {/* <span className="text-danger">{this.state.error_list.phone}</span> */}
                                     </div>
                                     <div className="form-group mb-3">
                                         <lebel>Password</lebel>
                                         <input type="text" name="password" value={this.state.password} className="form-control"  onChange={this.handleInput}/>
+                                        {/* <span className="text-danger">{this.state.error_list.password}</span> */}
                                     </div>
 
                                     <div className="form-group mb-3">
