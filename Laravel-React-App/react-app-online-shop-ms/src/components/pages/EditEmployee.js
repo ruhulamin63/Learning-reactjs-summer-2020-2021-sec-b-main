@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-class Register extends Component{
+class EditEmployee extends Component{
 
     state = {
         username:'',
@@ -17,19 +17,39 @@ class Register extends Component{
         });
     }
 
-    saveRegister = async (e) =>{
-        e.preventDefault();
+    async componentDidMount(){
 
-        const res = await axios.post('http://localhost:8000/api/emp-register', this.state);
+        const employee_id = this.props.match.params.id;
+
+        const res = await axios.get(`http://localhost:8000/api/edit-employee/${employee_id}`);
 
         if(res.data.status === 200){
-            console.log(res.data.message);
+
+            console.log(employee_id);
+            
             this.setState({
-                username:'',
-                name:'',
-                phone:'',
-                password:'',
+                username: res.data.employees.username,
+                name: res.data.employees.name,
+                phone: res.data.employees.phone,
+                password: res.data.employees.password,
             });
+        }
+    }
+
+    updateEmployee = async (e) =>{
+        e.preventDefault();
+
+        const employee_id = this.props.match.params.id;
+
+        document.getElementById('updatebtn').disable = true;
+        document.getElementById('updatebtn').innerText = 'Updating';
+        
+        const res = await axios.put(`http://localhost:8000/api/update-employee/${employee_id}`, this.state);
+        
+        if(res.data.status === 200){
+
+            document.getElementById('updatebtn').disable = false;
+            document.getElementById('updatebtn').innerText = 'Update';
         }
     }
 
@@ -40,17 +60,17 @@ class Register extends Component{
                     <div className="col-md-6">
                         <div className="card">
                             <div className="card-header">
-                                <h4>Employee Register Page
-                                    <Link to={'/'} className="btn btn-primary btn-sm float-end">Back</Link>
+                                <h4>Edit Employee
+                                    <Link to={'/admin'} className="btn btn-primary btn-sm float-end">Back</Link>
                                 </h4>
                             </div>
 
                             <div className="card-body">
 
-                                <form onSubmit={this.saveRegister}>
+                                <form onSubmit={this.updateEmployee}>
 
                                     <div className="form-group mb-3">
-                                        <lebel>Username</lebel>
+                                        <lebel>User Name</lebel>
                                         <input type="text" name="username" value={this.state.username} className="form-control" onChange={this.handleInput}/>
                                     </div>
                                     <div className="form-group mb-3">
@@ -67,7 +87,7 @@ class Register extends Component{
                                     </div>
 
                                     <div className="form-group mb-3">
-                                        <button type="submit" className="btn btn-primary">Sign Up</button>
+                                        <button type="submit" id="updatebtn" className="btn btn-primary">Update</button>
                                     </div>
                                 </form>
                             </div>
@@ -79,4 +99,4 @@ class Register extends Component{
     }
 }
 
-export default Register;
+export default EditEmployee;

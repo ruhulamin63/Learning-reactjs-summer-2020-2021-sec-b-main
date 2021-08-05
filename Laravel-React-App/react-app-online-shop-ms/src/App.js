@@ -7,16 +7,23 @@ import Login from './components/pages/Login';
 import Admin from './components/pages/Admin';
 import Employee from './components/pages/Employee';
 import AddProduct from './components/pages/AddProduct';
+import EditEmployee from './components/pages/EditEmployee';
+
 
 function App() {
   return (
     <Router>
       <Switch>
         <Route exact path="/" component={Home}/>
+
         <Route path="/emp-register" component={Register}/>
         <Route path="/emp-login" component={Login}/>
+
         <Route path="/admin" component={Admin}/>
+
         <Route path="/employee" component={Employee}/>
+        <Route path="/edit-employee/:id" component={EditEmployee}/>
+
         <Route path="/add-product" component={AddProduct}/>
       </Switch>
     </Router>
