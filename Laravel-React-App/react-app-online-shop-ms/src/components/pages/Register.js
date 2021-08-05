@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
+import swal from 'sweetalert';
+
 class Register extends Component{
 
     state = {
@@ -23,7 +25,15 @@ class Register extends Component{
         const res = await axios.post('http://localhost:8000/api/emp-register', this.state);
 
         if(res.data.status === 200){
-            console.log(res.data.message);
+            //console.log(res.data.message);
+
+            swal({
+                title: "Inserted!",
+                text: res.data.message,
+                icon: "success",
+                button: "OK!",
+              });
+
             this.setState({
                 username:'',
                 name:'',
@@ -41,7 +51,7 @@ class Register extends Component{
                         <div className="card">
                             <div className="card-header">
                                 <h4>Employee Register Page
-                                    <Link to={'/'} className="btn btn-primary btn-sm float-end">Back</Link>
+                                    <Link to={'/admin'} className="btn btn-primary btn-sm float-end">Back</Link>
                                 </h4>
                             </div>
 

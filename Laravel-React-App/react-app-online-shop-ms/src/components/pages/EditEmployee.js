@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
+import swal from 'sweetalert';
+
 class EditEmployee extends Component{
 
     state = {
@@ -43,13 +45,20 @@ class EditEmployee extends Component{
 
         document.getElementById('updatebtn').disable = true;
         document.getElementById('updatebtn').innerText = 'Updating';
-        
+
         const res = await axios.put(`http://localhost:8000/api/update-employee/${employee_id}`, this.state);
         
         if(res.data.status === 200){
 
             document.getElementById('updatebtn').disable = false;
             document.getElementById('updatebtn').innerText = 'Update';
+
+            swal({
+                title: "Updated!",
+                text: res.data.message,
+                icon: "success",
+                button: "OK!",
+              });
         }
     }
 

@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 
+import swal from 'sweetalert';
+
 class Admin extends Component{
 
     state = {
@@ -33,7 +35,15 @@ class Admin extends Component{
 
         if(res.data.status === 200){
 
-            console.log(res.data.message);
+            //console.log(res.data.message);
+
+            swal({
+                title: "Deleted!",
+                text: res.data.message,
+                icon: "success",
+                button: "OK!",
+              });
+
             chickDelBtn.closest('tr').remove();
         }
     }
