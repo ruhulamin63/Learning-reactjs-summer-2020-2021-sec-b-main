@@ -27,14 +27,22 @@ class EditEmployee extends Component{
 
         if(res.data.status === 200){
 
-            console.log(employee_id);
-            
+            //console.log(employee_id);
             this.setState({
                 username: res.data.employees.username,
                 name: res.data.employees.name,
                 phone: res.data.employees.phone,
                 password: res.data.employees.password,
             });
+        }else{
+            swal({
+                title: "Warning!",
+                text: res.data.message,
+                icon: "success",
+                button: "OK!",
+              });
+              
+            this.props.history.push('/admin');  
         }
     }
 
@@ -52,6 +60,8 @@ class EditEmployee extends Component{
 
             document.getElementById('updatebtn').disable = false;
             document.getElementById('updatebtn').innerText = 'Update';
+
+            this.props.history.push('/admin');
 
             swal({
                 title: "Updated!",

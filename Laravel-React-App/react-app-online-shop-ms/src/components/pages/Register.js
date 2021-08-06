@@ -12,7 +12,7 @@ class Register extends Component{
         name:'',
         phone:'',
         password:'',
-       // error_list: [],
+        //error_list: [],
     }
 
     handleInput = (e) => {
@@ -42,6 +42,8 @@ class Register extends Component{
                 phone:'',
                 password:'',
             });
+
+            this.props.history.push('/admin');
 
         }
         // else{

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import Employee from './Employee';
 
 class Home extends Component{
 
