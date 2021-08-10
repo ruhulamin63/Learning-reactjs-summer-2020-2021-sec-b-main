@@ -5,7 +5,10 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Register;
-use Illuminate\Support\Facades\Validator;
+//use Illuminate\Support\Facades\Validator;
+//use App\Validator;
+
+
 
 class EmpController extends Controller
 {
@@ -23,34 +26,36 @@ class EmpController extends Controller
     public function store(Request $req)
     {
 
-        $validator = Validator::make($req->all(), [
+        $validator = Validator::make($req->all(),[
+
             'username' => 'requird|max:191',
             'name' => 'requird|max:191',
             'phone' => 'requird|max:11|min:11',
             'password' => 'requird|max:20|min:8',
         ]);
 
-        // if ($validator->fails()) {
+        if ($validator->fails()) {
 
-        //     return response()->json([
-        //         'validate_error' => $validator->messages(),
-        //     ]);
-        // } else {
+            return response()->json([
+                'validate_error' => $validator->messages(),
+            ]);
 
-        $emp = new Register;
+        } else {
 
-        $emp->username = $req->input('username');
-        $emp->name = $req->input('name');
-        $emp->phone = $req->input('phone');
-        $emp->password = $req->input('password');
+            $emp = new Register;
 
-        $emp->save();
+            $emp->username = $req->input('username');
+            $emp->name = $req->input('name');
+            $emp->phone = $req->input('phone');
+            $emp->password = $req->input('password');
 
-        return response()->json([
-            'status' => 200,
-            'message' => 'Employee Register Added Successfully',
-        ]);
-        //}
+            $emp->save();
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Employee Register Added Successfully',
+            ]);
+        }
     }
 
     public function edit($id)

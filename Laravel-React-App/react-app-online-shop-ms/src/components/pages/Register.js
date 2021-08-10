@@ -12,7 +12,7 @@ class Register extends Component{
         name:'',
         phone:'',
         password:'',
-        //error_list: [],
+        error_list: [],
     }
 
     handleInput = (e) => {
@@ -27,7 +27,8 @@ class Register extends Component{
         const res = await axios.post('http://localhost:8000/api/emp-register', this.state);
 
         if(res.data.status === 200){
-            //console.log(res.data.message);
+            
+            console.log(res.data.message);
 
             swal({
                 title: "Inserted!",
@@ -45,12 +46,12 @@ class Register extends Component{
 
             this.props.history.push('/admin');
 
+        }else{
+
+            this.setState({
+                error_list: res.data.validate_error,
+            });
         }
-        // else{
-        //     this.setState({
-        //         error_list: res.data.validate_error,
-        //     });
-        // }
     }
 
     render(){
@@ -72,7 +73,7 @@ class Register extends Component{
                                     <div className="form-group mb-3">
                                         <lebel>Username</lebel>
                                         <input type="text" name="username" value={this.state.username} className="form-control" onChange={this.handleInput}/>
-                                        {/* <span className="text-danger">{this.state.error_list.username}</span> */}
+                                        <span className="text-danger">{this.state.error_list.username}</span>
                                     </div>
                                     <div className="form-group mb-3">
                                         <lebel>Name</lebel>

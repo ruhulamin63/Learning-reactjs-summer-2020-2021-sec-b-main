@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import axios from 'axios';
+import axios from 'axios'
 
 //import swal from 'sweetalert';
 
@@ -49,7 +49,7 @@ class AgentTransaction extends Component{
                             <td>{item.date}</td>
 
                             <td>
-                                <Link to={`show-agent/${item.id}`} className="btn btn-success btn-sm">download pdf</Link>
+                                <Link to={`agent-invoice`} className="btn btn-success btn-sm">pdf</Link>
                             </td>
                         </tr>
                     );

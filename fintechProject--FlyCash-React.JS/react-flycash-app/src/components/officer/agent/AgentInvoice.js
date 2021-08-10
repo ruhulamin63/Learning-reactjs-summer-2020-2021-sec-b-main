@@ -1,26 +1,25 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import ReactToPrint from 'react-to-print';
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
-//import swal from 'sweetalert';
-
-class CustomerTransaction extends Component{
+export class ComponentToPrint extends React.PureComponent {
 
     state = {
-        customers: [],
+        agents: [],
         loding: true,
     }
 
     async componentDidMount() {
 
-        const res = await axios.get('http://localhost:8000/api/transaction-customer');
+        const res = await axios.get('http://localhost:8000/api/transaction-agent');
 
        // console.log(res);
 
         if(res.data.status === 200 ){
             
             this.setState({
-                customers: res.data.customers,
+                agents: res.data.agents,
                 loding: false,    
             });
         }
@@ -28,16 +27,14 @@ class CustomerTransaction extends Component{
 
 //======================================================================
 
-
-    render(){
-
-        var customer_transaction_table = "";
+    render() {
+        var agent_transaction_table = "";
 
         if(this.state.loding){
-            customer_transaction_table = <tr><td colSpan="8"><h2>loding...</h2></td></tr>
+            agent_transaction_table = <tr><td colSpan="8"><h2>loding...</h2></td></tr>
         }else{
-            customer_transaction_table = 
-                this.state.customers.map( (item)=> {
+            agent_transaction_table = 
+                this.state.agents.map( (item)=> {
                     return (
                         <tr key={item.id}>
                             <td>{item.id}</td>
@@ -47,29 +44,25 @@ class CustomerTransaction extends Component{
                             <td>{item.amount}</td>
                             <td>{item.balance}</td>
                             <td>{item.date}</td>
-
-                            <td>
-                                <Link to={`customer-invoice`} className="btn btn-success btn-sm">pdf</Link>
-                            </td>
                         </tr>
                     );
                 });
         }
-
-        return(
+        
+        return (
             <div ClassName="container">
                 <div ClassName="row">
                     <div className="col-md-12">
                         <div className="card">
                             <div className="card-header">
-                                <h4>Customer All Transaction Page
-                                    <Link to={'/show-customer'} className="btn btn-primary btn-sm float-end">Back</Link>
+                                <h4>Invoice pdf print
+                                    <Link to={'/transaction-agent'} className="btn btn-primary btn-sm float-end">Back</Link>
                                 </h4>
                             </div>
 
                             <div className="card-body">
 
-                                <h2>Transaction Data</h2>
+                                <h2>Agent Transaction Data</h2>
                                 <table className="table table-bordered table-striped">
                                     <thead>
                                         <tr>
@@ -80,17 +73,13 @@ class CustomerTransaction extends Component{
                                             <th>Amount</th>
                                             <th>Balance</th>
                                             <th>Date</th>
-                                            <th>View</th>
                                         </tr>
                                     </thead>
             
                                     <tbody>
-                                        {customer_transaction_table}
+                                        {agent_transaction_table}
                                     </tbody>
                                 </table>
-
-                                <Link to={'/show-customer'} className="btn btn-primary btn-sm float-end">Back</Link>
-
                             </div>
                         </div>
                     </div>
@@ -100,4 +89,28 @@ class CustomerTransaction extends Component{
     }
 }
 
-export default CustomerTransaction;
+  class Example extends React.PureComponent {
+    render() {
+      return (
+        <div>
+          <ReactToPrint
+            trigger={() => {
+              // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
+              // to the root node of the returned component as it will be overwritten.
+              return (
+                
+                    // <a href="#">Print</a>;
+                    <Link to={ <a href="#">Print</a>} className="btn btn-primary">Print</Link>
+              );
+            }}
+            content={() => this.componentRef}
+          />
+          <ComponentToPrint ref={el => (this.componentRef = el)} />
+        </div>
+      );
+    }
+  }
+
+export default Example;
+
+

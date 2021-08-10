@@ -17,6 +17,9 @@ import Profile from './components/officer/profile/Profile';
 import ProfileEdit from './components/officer/profile/ProfileEdit';
 import ChangePassword from './components/officer/profile/ChangePassword';
 
+import AgentInvoice from './components/officer/agent/AgentInvoice';
+import CustomerInvoice from './components/officer/customer/CustomerInvoice';
+
 
 //=============================End Officer Class===============================
 
@@ -42,6 +45,9 @@ function App() {
           <Route exact path="/edit-profile/:id" component={ProfileEdit}/>
 
           <Route exact path="/change-password/:id" component={ChangePassword}/>
+
+          <Route exact path="/agent-invoice" component={AgentInvoice}/>
+          <Route exact path="/customer-invoice" component={CustomerInvoice}/>
 
   {/* =============================End Officer Router=============================== */}
         </Switch>
