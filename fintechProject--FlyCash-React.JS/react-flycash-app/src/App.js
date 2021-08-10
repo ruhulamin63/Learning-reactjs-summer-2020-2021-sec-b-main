@@ -22,29 +22,31 @@ import ChangePassword from './components/officer/profile/ChangePassword';
 
 function App() {
   return (
-    <Router>
-      <Switch>
-{/* =============================Start Officer Router=============================== */}
+    <div>
+       <Router>
+        <Switch>
+  {/* =============================Start Officer Router=============================== */}
 
 
-        <Route exact path="/" component={Home}/>
+          <Route exact path="/" component={Home}/>
 
-        <Route exact path="/show-customer" component={CustomerDeatils}/>
-        <Route exact path="/edit-customer/:id" component={CustomerEdit}/>
-        <Route exact path="/transaction-customer" component={CustomerTransaction}/>
+          <Route exact path="/show-customer" component={CustomerDeatils}/>
+          <Route exact path="/edit-customer/:id" component={CustomerEdit}/>
+          <Route exact path="/transaction-customer" component={CustomerTransaction}/>
 
-        <Route exact path="/show-agent" component={AgentDetails}/>
-        <Route exact path="/edit-agent/:id" component={AgentEdit}/>
-        <Route exact path="/transaction-agent" component={AgentTransaction}/>
+          <Route exact path="/show-agent" component={AgentDetails}/>
+          <Route exact path="/edit-agent/:id" component={AgentEdit}/>
+          <Route exact path="/transaction-agent" component={AgentTransaction}/>
 
-        <Route exact path="/view-profile" component={Profile}/>
-        <Route exact path="/edit-profile/:id" component={ProfileEdit}/>
+          <Route exact path="/view-profile" component={Profile}/>
+          <Route exact path="/edit-profile/:id" component={ProfileEdit}/>
 
-        <Route exact path="/change-password/:id" component={ChangePassword}/>
+          <Route exact path="/change-password/:id" component={ChangePassword}/>
 
-{/* =============================End Officer Router=============================== */}
-      </Switch>
-    </Router>
+  {/* =============================End Officer Router=============================== */}
+        </Switch>
+      </Router>
+    </div>
   );
 }
 
