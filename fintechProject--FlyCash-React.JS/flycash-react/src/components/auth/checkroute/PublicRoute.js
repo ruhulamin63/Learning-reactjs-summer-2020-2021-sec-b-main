@@ -1,0 +1,26 @@
+import { Redirect , Route } from "react-router-dom";
+import { getEmail } from "../connect/getSession";
+
+const PublicRoute = ({component: Component, ...rest}) => {
+    return (
+        <>
+            <Route
+                {...rest}
+                render={props =>{
+                    return !getEmail() ? <Component {...props} />
+                    : <Redirect to={{ pathname: "/officer-dashboard"}}/>                
+                } }
+            />
+            <Route
+                {...rest}
+                render={props =>{
+                    return !getEmail() ? <Component {...props} />
+                    : <Redirect to={{ pathname: "/customer-dashboard"}}/>                
+                } }
+            />
+        </>
+        
+    )
+}
+
+export default PublicRoute;
