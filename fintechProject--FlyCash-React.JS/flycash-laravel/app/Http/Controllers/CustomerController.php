@@ -85,6 +85,7 @@ class CustomerController extends Controller
     public function view()
     {
         $customer= Customerstransaction::all(); //change Officer to (Customer)->tablename
+        //$customer = DB::table('customerstransactions')->where('email', '=', $email)->get();
 
         //$users = Officer::orderBy('id','DESC')->get(); //change Officer to (Agent)->tablename
 
@@ -92,6 +93,57 @@ class CustomerController extends Controller
             'status' => 200,
             'customers' => $customer
         ]);
+    }
+
+//===============Block & Unblock Part====================
+
+    public function userblocked($id)
+    {
+        //dd($email);
+        $update =  DB::table('customers')
+        ->where('id', $id)
+        ->update([
+            'transaction_status' => 'blocked',
+        ]);
+    
+        if ($update)
+        {
+            return response()->json([
+                'status' => 200,
+                'updates' => $update,
+                'message' =>"Customer Transaction Blocked",
+            ]);
+
+        }else{
+            return response()->json([
+                'message' => 'Not updated'
+            ]);
+        }
+    }
+
+    public function userunblocked($id)
+    {
+        
+        //dd($email);
+        $update =  DB::table('customers')
+        ->where('id', $id)
+        ->update([
+            'transaction_status' => 'unblocked',
+        ]);
+    
+        if ($update)
+        {
+            return response()->json([
+                'status' => 200,
+                'updates' => $update,
+                'message' =>"Customer Transaction Unblocked",
+            ]);
+
+        }else{
+            return response()->json([
+                'message' => 'Not updated',
+            ]);
+        }
     }
 
 //======================================End Officer Function========================================

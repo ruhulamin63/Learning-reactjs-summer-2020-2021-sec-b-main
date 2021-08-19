@@ -1,0 +1,24 @@
+[
+	{
+		"name":"Jahidul Hasan",
+		"username":"aaa",
+		"password":"aa",
+		"mobilenumber":"01631137535",
+		"email":"hasanjoy28@gmail.com",
+		"gender":"Male",
+		"dd":"11",
+		"mm":"44",
+		"yyyy":"2222"
+	},
+	{
+		"name":"Jahidul",
+		"username":"aa", 
+		"password":"Apple15",
+		"mobilenumber":"0163137535",
+		"email":"hasajoy28@gmail.com",
+		"gender":"Male",
+		"dd":"12",
+		"mm":"44",
+		"yyyy":"2122"
+	}
+]

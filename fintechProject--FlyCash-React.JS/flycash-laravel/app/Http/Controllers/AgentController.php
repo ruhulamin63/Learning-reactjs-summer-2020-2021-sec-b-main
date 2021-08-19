@@ -72,4 +72,58 @@ class AgentController extends Controller
         ]);
     }
 // ============================ End Destroy ====================================
+
+    //===============Block & Unblock Part====================
+
+    public function agentblocked($id)
+    {
+        //dd($email);
+        $update =  DB::table('agents')
+        ->where('id', $id)
+        ->update([
+            'transaction_status' => 'blocked',
+        ]);
+    
+        if ($update)
+        {
+            return response()->json([
+                'status' => 200,
+                'updates' => $update,
+                'message' =>"Agent Transaction Blocked",
+            ]);
+
+        }else{
+            return response()->json([
+                'message' => 'Not updated'
+            ]);
+        }
+    }
+
+    public function agentunblocked($id)
+    {
+        
+        //dd($email);
+        $update =  DB::table('agents')
+        ->where('id', $id)
+        ->update([
+            'transaction_status' => 'unblocked',
+        ]);
+    
+        if ($update)
+        {
+            return response()->json([
+                'status' => 200,
+                'updates' => $update,
+                'message' =>"Agent Transaction Unblocked",
+            ]);
+
+        }else{
+            return response()->json([
+                'message' => 'Not updated',
+            ]);
+        }
+    }
+    
+//=======================End Officer Part========================
+
 }
