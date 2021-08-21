@@ -20,6 +20,28 @@ class ProfileEdit extends Component {
         });
     }
 
+    async componentDidMount(){
+
+        const officer_id = this.props.match.params.id;
+
+        const res = await axios.get(`http://localhost:8000/api/edit-password/${officer_id}`);
+
+        if(res.data.status === 200){
+            
+            //console.log(agent_id);
+           
+        }else{
+            swal({
+                title: "Warning!",
+                text: res.data.message,
+                icon: "warning",
+                button: "OK!",
+              });
+              
+            this.props.history.push('/change-password');  
+        }
+    }
+
     updatePassword = async (e) =>{
         e.preventDefault();
 
@@ -28,7 +50,7 @@ class ProfileEdit extends Component {
         document.getElementById('updatebtn').disable = true;
         document.getElementById('updatebtn').innerText = 'Updating';
 
-        const res = await axios.post(`http://localhost:8000/api/update-profile/${officer_id}`, this.state);
+        const res = await axios.post(`http://localhost:8000/api/update-password/${officer_id}`, this.state);
         
         console.log(res);
 
@@ -45,7 +67,7 @@ class ProfileEdit extends Component {
                 icon: "success",
                 button: "OK!",
               });
-        }else{
+        }else if(res.data.status === 420){
             swal({
                 title: "Warning!",
                 text: res.data.message,
@@ -53,7 +75,7 @@ class ProfileEdit extends Component {
                 button: "OK!",
                 });
                 
-            //this.props.history.push('/view-profile');  
+            this.props.history.push('/view-profile');  
         }
     }
 
@@ -75,7 +97,7 @@ class ProfileEdit extends Component {
 
                         <h4>Officer Change Password</h4>
                     </div>
-
+                    <Link to={'/view-profile'} className="btn btn-primary btn-sm float-end">Back</Link>
                         <div className="card-body">
 
                             <form onSubmit={this.updatePassword}>
@@ -91,11 +113,7 @@ class ProfileEdit extends Component {
                                     <lebel>Re Password</lebel>
                                     <input type="text" name="re_password" value={this.state.re_password} className="form-control"  onChange={this.handleInput}/>
                                 </div>
-
-                                <div className="form-group mb-3">
-                                    <button type="submit" id="updatebtn" className="btn btn-primary btn-sm float-end">Save</button>
-                                    <Link to={'/view-profile'} className="btn btn-primary btn-sm float-end">Back</Link>
-                                </div>
+                                <button type="submit" id="updatebtn" className="btn btn-primary btn-sm float-end">Save</button>
                             </form>
                         </div>
                     </div>

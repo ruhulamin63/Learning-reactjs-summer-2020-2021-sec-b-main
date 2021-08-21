@@ -8,25 +8,26 @@ use Illuminate\Http\Request;
 
 class PassController extends Controller
 {
-    public function edit(Officer $email)
+    public function editPassword($id)
     {
-        $users= Officer::find($email);
+        $changePassword= Officer::find($id);
 
-        return view('pages.officer.password.password_edit')->with('user', $users);
+        return response()->json([
+            'status' => 200,
+            'passwords' => $changePassword,
+        ]);
     }
 
-    public function update(Request $req, Officer $email)
+    public function updatePassword(Request $req, $id)
     {
-        $users = Officer::find($email);
-        
-        if($users->password != $req->password){
-            if($req->password==$req->password_confirmation){
-                $users->password = $req->password;
-            }
-        }
-  
-        $users->save();
+        $updatePassword = Officer::find($id);
 
-        return redirect()->route('password_update');
+        $updatePassword->update();
+        
+        return response()->json([
+            'status' => 200,
+            'passwords' => $updatePassword,
+            'message' => 'Password Update Successfully',
+        ]);
     }
 }

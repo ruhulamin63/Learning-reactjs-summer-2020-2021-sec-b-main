@@ -1,85 +1,60 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { useState, useEffect } from 'react';
+import { useHistory, Link } from "react-router-dom";
 import "../../../App.css";
 import SideNav from "../../layouts/sidebar/OfficerSidebar";
 import Navbar from "../../layouts/navbars/OfficerNavbar";
-import { Link } from 'react-router-dom'
 import axios from 'axios';
 
-class CustomerDeatils extends Component {
+const CustomerDeatils = () => {
 
-    state = {
-        customers: [],
-        loding: true,
-    }
+    const history = useHistory();
+    const [event, setCustomers] = useState([]);
+    const [search, setSearch] = useState("");
+    //const [isEvent, setIsEvent] = useState([]);
 
-    async componentDidMount() {
+    const mount= async()=>{
 
         const res = await axios.get('http://localhost:8000/api/show-customer');
 
-        //console.log(res);
+        console.log(res.data);
 
-        if(res.data.status === 200 ){
-            
-            this.setState({
-                customers: res.data.customers,
-                loding: false,    
-            });
+        //var data = res.data.customers;
+        
+        if (res.data.status === 200) {
+            setCustomers(res.data.customers)
         }
+            
     }
 
-//======================================================================
+     useEffect(() => {
+        mount();
+        
+     }, []);
 
-    render(){
-
-        var customer_table = "";
-
-        if(this.state.loding){
-            customer_table = <tr><td colSpan="11"><h2>loding...</h2></td></tr>
-        }else{
-            customer_table = 
-            this.state.customers.map( (item)=> {
-                return (
-                    <tr key={item.id}>
-                        <td>{item.id}</td>
-                        <td>{item.name}</td>
-                        <td>{item.email}</td>
-                        <td>{item.phone}</td>
-                        <td>{item.nid}</td>
-                        <td>{item.dob}</td>
-                        <td>{item.balance}</td>
-                        <td>{item.transaction_status}</td>
-                        <td>{item.type}</td>
-
-                        <td>
-                            <Link to={`details-customer/${item.id}`} className="btn btn-success btn-sm">View</Link>
-                        </td>
-                        <td>
-                            <Link to={`edit-customer/${item.id}`} className="btn btn-success btn-sm">Edit</Link>
-                        </td>
-                    </tr>
-                );
-            });
-        }
-
-        return (
-            <div>
-            <div className="wrapper">
-            <SideNav />
-            <div className="main-panel ps" >
-                <Navbar />
-            <div className= "content">
-                <div class="row" style={{ right: "500px" }}>
+    return (
+        <div>
+        <div className="wrapper">
+        <SideNav />
+        <div className="main-panel ps" >
+            <Navbar />
+        <div className= "content">
+            <div class="row" style={{ right: "500px" }}>
                 <div class="col-md-12">
                     <div class="card ">
-                    <div class="card-header">
-                        <h4>Customer View Page
-                            
-                        </h4>
-                    </div>
+                        <div class="card-header">
+                            <h4>Customer View Page</h4>
 
-                    <div class="card-body">
-                        <div class="table-responsive-lg">
-                            <h2>Customer Data</h2>
+                            <input type="text"
+                                placeholder="searching"
+                                onChange={e => {setSearch(e.target.value)}}
+                            />
+                        </div>
+
+                        <div class="card-body">
+                       
+                            <div class="table-responsive-lg">
+                                <h2>Customer Data</h2>
 
                             <table className="table table-bordered table-striped">
                                 <thead>
@@ -99,22 +74,58 @@ class CustomerDeatils extends Component {
                                 </thead>
         
                                 <tbody>
-                                    {customer_table}
+                                    {
+                                        event.filter((val) => {
+                                            if (search == "") {
+                                                return val
+                                            }
+                                            else if (val.name.toLowerCase().includes(search.toLowerCase()))
+                                            {
+                                                return val
+                                            }
+
+                                            }).map((e) => {
+
+                                            return (
+                                                <tr key={e.id} >
+                                                    <td>{e.id}</td>
+                                                    <td>{e.name}</td>
+                                                    <td>{e.email}</td>
+                                                    <td>{e.phone}</td>
+                                                    <td>{e.nid}</td>
+                                                    <td>{e.dob}</td>
+                                                    <td>{e.balance}</td>
+                                                    <td>{e.transaction_status}</td>
+                                                    <td>{e.type}</td>
+
+                                                    {/* <td>
+                                                        {e.eventType === 2 ? 'Normal Event' : `${e.targetMoney}$`}
+                                                        </td>
+                                                    <td>{e.eventType ===1 ? 'Normal Event' : 'Volunteer Event'}</td> */}
+
+                                                    <td>
+                                                        <Link to={`details-customer/${e.id}`} className="btn btn-success btn-sm">View</Link>
+                                                    </td>
+                                                    <td>
+                                                        <Link to={`edit-customer/${e.id}`} className="btn btn-success btn-sm">Edit</Link>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })
+                                    }
                                 </tbody>
                             </table>
-
-                            <Link to={'/officer-dashboard'} className="btn btn-primary btn-sm float-end">Back</Link>
-                            <Link to={'/transaction-customer'} className="btn btn-primary btn-sm float-end">All Transaction</Link>
                         </div>
-                    </div>
+                    </div> 
                     </div>
                 </div>
-                </div>
+                    <Link to={'/officer-dashboard'} className="btn btn-primary btn-sm float-end">Back</Link>
+                    <Link to={'/transaction-customer'} className="btn btn-primary btn-sm float-end">All Transaction</Link>
             </div>
-            </div>
-            </div>
-            </div>
-        );
-    }
-};
+        </div>
+        </div>
+        </div>
+        </div>
+    );
+}
 export default CustomerDeatils;

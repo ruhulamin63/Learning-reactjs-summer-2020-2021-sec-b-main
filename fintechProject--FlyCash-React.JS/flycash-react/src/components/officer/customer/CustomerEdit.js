@@ -9,6 +9,7 @@ import swal from 'sweetalert';
 class CustomerEdit extends Component {
 
     state = {
+        name:'',
         phone:'',
         nid:'',
         dob:'',
@@ -25,12 +26,13 @@ class CustomerEdit extends Component {
 
         const customer_id = this.props.match.params.id;
 
-        const res = await axios.get(`http://localhost:8000/api/edit-customer/${customer_id}`);
+        const res = await axios.get(`http://localhost:8000/api/edit-customer/${customer_id}`, this.state);
 
         if(res.data.status === 200){
 
             //console.log(customer_id);
             this.setState({
+                name: res.data.customers.name,
                 phone: res.data.customers.phone,
                 nid: res.data.customers.nid,
                 dob: res.data.customers.dob,
@@ -92,11 +94,15 @@ class CustomerEdit extends Component {
 
                         <h4>Customer Edit Page</h4>
                     </div>
-
+                    <Link to={'/show-customer'} className="btn btn-primary btn-sm float-end">Back</Link>
                         <div className="card-body">
 
                             <form onSubmit={this.updateCustomer}>
 
+                                <div className="form-group mb-3">
+                                    <lebel>Name</lebel>
+                                    <input type="text" name="name" value={this.state.name} className="form-control"  onChange={this.handleInput}/>
+                                </div>
                                 <div className="form-group mb-3">
                                     <lebel>Phone</lebel>
                                     <input type="text" name="phone" value={this.state.phone} className="form-control"  onChange={this.handleInput}/>
@@ -113,11 +119,7 @@ class CustomerEdit extends Component {
                                     <lebel>Type</lebel>
                                     <input type="text" name="type" value={this.state.type} className="form-control"  onChange={this.handleInput}/>
                                 </div>
-
-                                <div className="form-group mb-3">
-                                    <button type="submit" id="updatebtn"className="btn btn-primary btn-sm float-end">Update</button>
-                                    <Link to={'/show-customer'} className="btn btn-primary btn-sm float-end">Back</Link>
-                                </div>
+                                <button type="submit" id="updatebtn"className="btn btn-primary btn-sm float-end">Update</button>
                             </form>
                         </div>
                     </div>

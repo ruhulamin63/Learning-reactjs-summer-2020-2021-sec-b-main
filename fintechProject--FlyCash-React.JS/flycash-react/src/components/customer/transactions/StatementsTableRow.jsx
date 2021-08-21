@@ -2,6 +2,7 @@
 import '../../../App.css';
 
 const StatementsTableRow = ({phone,transaction_type,date,amount,balance})=>{
+  
     return (
 
         <tbody>
@@ -10,7 +11,7 @@ const StatementsTableRow = ({phone,transaction_type,date,amount,balance})=>{
             <th>{phone}</th>
             <th>{transaction_type}</th>
             <th className="text-center">{amount}</th>
-            <th className="text-center">{balance}</th>
+            <th className="text-center hideb">{balance}</th>
             <th className="text-center">{date}</th>
           </tr>
           

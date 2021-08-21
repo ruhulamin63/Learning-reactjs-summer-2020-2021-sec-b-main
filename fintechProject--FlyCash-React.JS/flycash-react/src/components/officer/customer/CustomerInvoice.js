@@ -1,116 +1,113 @@
-import React from 'react';
-import ReactToPrint from 'react-to-print';
-import axios from 'axios'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import "../../../App.css";
+import logo from "../../../black/img/flycash.png";
+import { getUser } from "../../auth/connect/getSession";
+import Navbar from "../../layouts/navbars/OfficerNavbar";
+import SideNav from "../../layouts/sidebar/OfficerSidebar";
+import axios from 'axios';
+import { useHistory, Link } from "react-router-dom";
 
-export class ComponentToPrint extends React.PureComponent {
 
-    state = {
-        customers: [],
-        loding: true,
-    }
+const TransactionList = () => {
 
-    async componentDidMount() {
+  const user = getUser();
+
+  let today = new Date();
+  
+    let date=today.getDate() + "-"+ parseInt(today.getMonth()+1) +"-"+today.getFullYear();
+
+    const [event, setCustomersTransaction] = useState([]);
+
+    const mount= async()=>{
 
         const res = await axios.get('http://localhost:8000/api/transaction-customer');
 
-       // console.log(res);
+        console.log(res.data);
 
-        if(res.data.status === 200 ){
-            
-            this.setState({
-                customers: res.data.customers,
-                loding: false,    
-            });
+        //var data = res.data.customers;
+        
+        if (res.data.status === 200) {
+            setCustomersTransaction(res.data.customers)
         }
+            
     }
 
-//======================================================================
-
-    render() {
-        var customer_transaction_table = "";
-
-        if(this.state.loding){
-            customer_transaction_table = <tr><td colSpan="8"><h2>loding...</h2></td></tr>
-        }else{
-            customer_transaction_table = 
-                this.state.customers.map( (item)=> {
-                    return (
-                        <tr key={item.id}>
-                            <td>{item.id}</td>
-                            <td>{item.email}</td>
-                            <td>{item.phone}</td>
-                            <td>{item.transaction_type}</td>
-                            <td>{item.amount}</td>
-                            <td>{item.balance}</td>
-                            <td>{item.date}</td>
-                        </tr>
-                    );
-                });
-        }
+     useEffect(() => {
+        mount();
         
-        return (
-            <div ClassName="container">
-                <div ClassName="row">
-                    <div className="col-md-12">
-                        <div className="card">
-                            <div className="card-header">
-                                <h4>Invoice pdf print
-                                   
-                                </h4>
-                            </div>
-
-                            <div className="card-body">
-
-                                <h2>Transaction Data</h2>
-                                <table className="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Id</th>
-                                            <th>Email</th>
-                                            <th>Phone</th>
-                                            <th>Transaction Type</th>
-                                            <th>Amount</th>
-                                            <th>Balance</th>
-                                            <th>Date</th>
-                                        </tr>
-                                    </thead>
+     }, []);
+    
+    return (
+        <div className= "pdf">
+        
+        <SideNav />
+        <Navbar />
+        <div className="main-panel hide ps" >
+        
+        <div className= "content">
             
-                                    <tbody>
-                                        {customer_transaction_table}
-                                    </tbody>
-                                </table>
-                                <Link to={'/transaction-customer'} className="btn btn-primary btn-sm float-end">Back</Link>
-                            </div>
-                        </div>
+        
+        <div className='row' >
+            
+            <div className ="details">
+                <h3> Print Date :{date}</h3>
+                <h4>Name :{user.name}</h4>
+                <h4>Email :{user.email}</h4>
+                <h4>Phone :{user.phone}</h4>
+            </div>
+                <img className='photo' src={logo}></img>
+            </div>
+        
+            <div class="row">
+            <div class="col-md-12">
+                <div class="card ">
+                <div class="card-header">
+                   
+                    <h3 class="card-title"> Translation List</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive-lg">
+
+                    <table class="table tablesorter">
+                        <thead class=" text-primary">
+                            <tr>
+                                <th>Account Number</th>
+                                <th>Transaction Type</th>
+                                <th>Transaction Amount</th>
+                                <th>Current Balance</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            {
+                                event.map((e) => {
+
+                                    return (
+                                        <tr key={e.id} >
+                                        
+                                            <th>{e.phone}</th>
+                                            <th>{e.transaction_type}</th>
+                                            <th>{e.amount}</th>
+                                            <th>{e.balance}</th>
+                                            <th>{e.date}</th>
+                                        </tr>
+                                    );
+                                })
+                            }
+
+                        </tbody>
+                    </table>
                     </div>
                 </div>
+                </div>
             </div>
-        );
-    }
-}
-
-  class Example extends React.PureComponent {
-    render() {
-      return (
-        <div>
-          <ReactToPrint
-            trigger={() => {
-              // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
-              // to the root node of the returned component as it will be overwritten.
-              return (
-                // <a href="#">Print</a>;
-                <Link to={ <a href="#">Print</a>} className="btn btn-primary">Print</Link>
-          );
-            }}
-            content={() => this.componentRef}
-          />
-          <ComponentToPrint ref={el => (this.componentRef = el)} />
+                <Link to={'/transaction-customer'}  class="btn btn-primary btn-sm float-end">Back</Link>
+                <button onClick={() => window.print()} align="center" type="submit" class="btn btn-primary btn-sm float-end"> Print</button>
+            </div>
         </div>
-      );
-    }
-  }
-
-export default Example;
-
-
+      </div>
+      </div>
+  );
+};
+export default TransactionList;

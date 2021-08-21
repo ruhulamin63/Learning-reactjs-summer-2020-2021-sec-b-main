@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SideNav from "../layouts/sidebar/customersSidebar";
 import Navbar from "../layouts/navbars/CustomerNavbar";
 import cashinPNG from "../../black/img/icons/cashin.png";
@@ -14,26 +14,23 @@ import paymentPNG from "../../black/img/icons/payment.png";
 import cashoutPNG from "../../black/img/icons/cashout.png";
 import campaignPNG from "../../black/img/icons/campaign.png";
 import comingsoonPNG from "../../black/img/icons/comingsoon.png";
-import { getEamil, removeUserSession } from "../auth/connect/getSession";
+
+import { useHistory } from "react-router-dom";
+import { getUser, removeUserSession } from "../auth/connect/getSession";
 
 function Dashboard() {
+  const user = getUser();
 
-  let history = useHistory();
-    //const user = getEamil();
-
-  const handleLogout = () => {
-    removeUserSession();
-     history.push('/login');
-}
+ 
 
   return (
     
+      
       <div className="main-panel ps">
       <SideNav />
       <Navbar />
       
         <div className="content">
-          <div className="row"></div>
           <div className="row">
           
         
@@ -43,8 +40,7 @@ function Dashboard() {
                   <div className="row">
                     <div className="col-sm-6 text-left">
                       <h2 className="card-title">DASHBOARD</h2>
-                      <h4 className="card-title">Balance :5000</h4>
-                      <input type="button" value="Logout" onClick={handleLogout}/>
+                      <h4 className="card-title">Balance :{user.balance}</h4>
                     </div>
                   </div>
                 </div>
@@ -67,7 +63,7 @@ function Dashboard() {
                       <div className="font-icon-detail">
                         <div className="d-flex justify-content-center">
                           <div className="pic">
-                            <Link href="{{ route('customer_addmoney') }}">
+                            <Link to="/customer/add-money">
                               <img src={cashinPNG}></img>
                               <div className="picname">
                                 <h4>Add Money</h4>
@@ -82,7 +78,7 @@ function Dashboard() {
                       <div className="font-icon-detail">
                         <div className="d-flex justify-content-center">
                           <div className="pic">
-                            <Link href="{{ route('customer_sendmoney') }}">
+                            <Link to="/customer/send-money">
                               <img src={sendPNG}></img>
                               <div className="picname">
                                 <h4>Send Money</h4>
@@ -97,7 +93,7 @@ function Dashboard() {
                       <div className="font-icon-detail">
                         <div className="d-flex justify-content-center">
                           <div className="pic">
-                            <Link href="{{ route('customer_cashout') }}">
+                            <Link to="/customer/cash-out">
                               <img src={cashoutPNG}></img>
                               <div className="picname">
                                 <h4>Cash Out</h4>
@@ -112,7 +108,7 @@ function Dashboard() {
                       <div className="font-icon-detail">
                         <div className="d-flex justify-content-center">
                           <div className="pic">
-                            <Link href="{{ route('customer_paybill') }}">
+                            <Link to="/customer/payment">
                               <img src={paymentPNG}></img>
                               <div className="picname">
                                 <h4>Payment</h4>
@@ -127,7 +123,7 @@ function Dashboard() {
                       <div className="font-icon-detail">
                         <div className="d-flex justify-content-center">
                           <div className="pic">
-                            <Link href="{{ route('customer_recharge') }}">
+                            <Link to="/customer/mobile-recharge">
                               <img src={rechargePNG}></img>
                               <div className="picname">
                                 <h4>Mobile Recharge</h4>
@@ -142,7 +138,7 @@ function Dashboard() {
                       <div className="font-icon-detail">
                         <div className="d-flex justify-content-center">
                           <div className="pic">
-                            <Link href="{{ route('customer_transfermoney') }}">
+                            <Link to="/customer/transfer-money">
                               <img src={transferPNG}></img>
                               <div className="picname">
                                 <h4>Transfer Money</h4>
@@ -157,7 +153,7 @@ function Dashboard() {
                       <div className="font-icon-detail">
                         <div className="d-flex justify-content-center">
                           <div className="pic">
-                            <Link href="{{ route('customer_sendmoney') }}">
+                            <Link to="/customer/buy-tickets">
                               <img src={ticketPNG}></img>
                               <div className="picname">
                                 <h4>Buy Ticket</h4>
@@ -172,7 +168,22 @@ function Dashboard() {
                       <div className="font-icon-detail">
                         <div className="d-flex justify-content-center">
                           <div className="pic">
-                            <Link href="{{ route('pages.transactionlist') }}">
+                            <Link to="/customer/donate">
+                              <img src={donatePNG}></img>
+                              <div className="picname">
+                                <h4>Donation</h4>
+                              </div>
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
+                      <div className="font-icon-detail">
+                        <div className="d-flex justify-content-center">
+                          <div className="pic">
+                            <Link to="/customer/statement/:email">
                               <img src={statementPNG}></img>
                               <div className="picname">
                                 <h4>Statement</h4>
@@ -187,22 +198,7 @@ function Dashboard() {
                       <div className="font-icon-detail">
                         <div className="d-flex justify-content-center">
                           <div className="pic">
-                            <Link href="{{ route('customer_donation') }}">
-                              <img src={donatePNG}></img>
-                              <div className="picname">
-                                <h4>Donation</h4>
-                              </div>
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
-                      <div className="font-icon-detail">
-                        <div className="d-flex justify-content-center">
-                          <div className="pic">
-                            <Link href="{{ route('admin_ongoingcampaign') }}">
+                            <Link to="/customer/champaign">
                               <img src={campaignPNG}></img>
 
                               <div className="picname">
@@ -218,7 +214,7 @@ function Dashboard() {
                       <div className="font-icon-detail">
                         <div className="d-flex justify-content-center">
                           <div className="pic">
-                            <Link href="#">
+                            <Link to="#">
                               <img src={comingsoonPNG}></img>
                               <div className="picname">
                                 <h4>Coming Soon</h4>
@@ -233,7 +229,7 @@ function Dashboard() {
                       <div className="font-icon-detail">
                         <div className="d-flex justify-content-center">
                           <div className="pic">
-                            <Link href="#">
+                            <Link to="#">
                               <img src={comingsoonPNG}></img>
                               <div className="picname">
                                 <h4>Coming Soon</h4>

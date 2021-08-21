@@ -39,13 +39,13 @@ const Login  =() => {
                  setUserSession(data.email,data);
                 history.push('/customer-dashboard');
             }
-            // else if(response.data.agents.type=="#"){
-            //     setUserSession(response.data.token, response.data.user);
-            //     history.push('#');
+            // else if(response.data.agents.type=="admin"){
+            //     setUserSession(data.email,data);
+            //     history.push('/admin-dashboard');
             // }
-            // else if(response.data.admins.type=="#"){
-            //     setUserSession(response.data.token, response.data.user);
-            //     history.push('#');
+            // else if(response.data.admins.type=="agent"){
+            //     setUserSession(data.email,data);
+            //     history.push('/agent-dashboard');
             // }
             else if(data.type=="officer"){
                 setUserSession(data.email,data);
@@ -61,68 +61,66 @@ const Login  =() => {
     return (
         <div>
             <GuestNav/>
-    <div className="wrapper wrapper-full-page">
-    <div className="full-page login-page ">
-        <div className="content">
-        <div className=" container">
+            <div className="wrapper wrapper-full-page">
+                <div className="full-page login-page ">
+                    <div className="content">
+                        <div className=" container">
 
-        <div className="col-lg-4 col-md-6 ml-auto mr-auto">
-        <form className="form" method="post" >
-            
+                        <div className="col-lg-4 col-md-6 ml-auto mr-auto">
+                                <form className="form" method="post" >
+                                    
 
-            <div className="card card-login card-white">
-                <div className="card-header">
-                <img src={logo} alt=""></img>
-                    <h1 align="center" className="card-title">Log in</h1>
-                </div>
+                                    <div className="card card-login card-white">
+                                        <div className="card-header">
+                                        <img src={logo} alt=""></img>
+                                            <h1 align="center" className="card-title">Log in</h1>
+                                        </div>
 
-                {error && <div className="error">{error}</div>}
-                
-                <div className="card-body">
-                    <div className="input-group">
-                        <div className="input-group-prepend">
-                            <div className="input-group-text">
-                                <i className="tim-icons icon-email-85"></i>
+                                        {error && <div className="text-danger">{error}</div>}
+                                        {/* <span className="text-danger"> {error.email}</span> */}
+                                        
+                                        <div className="card-body">
+                                            <div className="input-group">
+                                                <div className="input-group-prepend">
+                                                    <div className="input-group-text">
+                                                        <i className="tim-icons icon-email-85"></i>
+                                                    </div>
+                                                </div>
+                                                <input type="email" name="email" className="form-control" placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)}/>
+                                            
+                                            </div>
+                                            <div className="input-group">
+                                                <div className="input-group-prepend">
+                                                    <div className="input-group-text">
+                                                        <i className="tim-icons icon-lock-circle"></i>
+                                                    </div>
+                                                </div>
+                                                <input type="password" placeholder="Password" name="password" className="form-control" value={password} onChange={e=>setPassword(e.target.value)}/>
+                                            
+                                            </div>
+                                        </div>
+                                        <div className="card-footer">
+
+                                            <input type="button" value={loging ? "Loging..." : "Login"} disabled={loging} className="btn btn-primary btn-lg btn-block mb-3" onClick={handleLogin}/>
+                                            <div className="pull-left">
+                                                <h6>
+                                                    <Link href="" className="link footer-link">Create Account</Link>
+                                                </h6>
+                                            </div>
+                                            <div className="pull-right">
+                                                <h6>
+                                                    <Link href="3" className="link footer-link">Forgot password?</Link>
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                        <input type="email" name="email" className="form-control" placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)}/>
-                    
-                    </div>
-                    <div className="input-group">
-                        <div className="input-group-prepend">
-                            <div className="input-group-text">
-                                <i className="tim-icons icon-lock-circle"></i>
-                            </div>
-                        </div>
-                        <input type="password" placeholder="Password" name="password" className="form-control" value={password} onChange={e=>setPassword(e.target.value)}/>
-                    
-                    </div>
-                </div>
-                <div className="card-footer">
-
-                    <input type="button" value={loging ? "Loging..." : "Login"} disabled={loging} className="btn btn-primary btn-lg btn-block mb-3" onClick={handleLogin}/>
-                    <div className="pull-left">
-                        <h6>
-                            <Link href="" className="link footer-link">Create Account</Link>
-                        </h6>
-                    </div>
-                    <div className="pull-right">
-                        <h6>
-                            <Link href="3" className="link footer-link">Forgot password?</Link>
-                        </h6>
+                        <Footer/>
                     </div>
                 </div>
             </div>
-        </form>
-    </div>
-
-
-
-        </div>
-        <Footer/>
-        </div></div></div>
-
-            
         </div>
     );
 };

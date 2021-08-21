@@ -3,8 +3,9 @@ import SideNav from "../layouts/sidebar/OfficerSidebar";
 import Navbar from "../layouts/navbars/OfficerNavbar";
 import cashinPNG from "../../black/img/icons/cashin.png";
 import sendPNG from "../../black/img/icons/sendmoney.png";
-import paymentPNG from "../../black/img/icons/payment.png";
-import cashoutPNG from "../../black/img/icons/cashout.png";
+import addpropic from "../../black/img/addpropic.png";
+import cashoutPNG from "../../black/img/admin/remove.png";
+import statementPNG from "../../black/img/icons/statement.png";
 //import React, { Component } from 'react'
 import { Link, useHistory } from "react-router-dom";
 import { getUser, removeUserSession } from "../auth/connect/getSession";
@@ -39,8 +40,8 @@ function OfficerDashboard() {
                             <div className="col-sm-6 text-left">
                             <h2 className="card-title">DASHBOARD</h2>
                             <h4 className="card-title">Welcome to communication officer</h4>
-                            <h5>{user.email}</h5>
-                            <input type="button" value="Logout" onClick={handleLogout}/>
+                            {/* <h5>{user.email}</h5> */}
+                            {/* <input type="button" value="Logout" onClick={handleLogout}/> */}
                             </div>
                         </div>
                         </div>
@@ -63,8 +64,8 @@ function OfficerDashboard() {
                             <div className="font-icon-detail">
                                 <div className="d-flex justify-content-center">
                                 <div className="pic">
-                                    <Link to="#">
-                                    <img src={cashinPNG}></img>
+                                    <Link to="/show-customer">
+                                    <img src={statementPNG}></img>
                                     <div className="picname">
                                         <h4>Customer Info</h4>
                                     </div>
@@ -78,8 +79,8 @@ function OfficerDashboard() {
                             <div className="font-icon-detail">
                                 <div className="d-flex justify-content-center">
                                 <div className="pic">
-                                    <Link to="#">
-                                    <img src={sendPNG}></img>
+                                    <Link to="/show-agent">
+                                    <img src={statementPNG}></img>
                                     <div className="picname">
                                         <h4>Agent Info</h4>
                                     </div>
@@ -108,8 +109,8 @@ function OfficerDashboard() {
                             <div className="font-icon-detail">
                                 <div className="d-flex justify-content-center">
                                 <div className="pic">
-                                    <Link to="#">
-                                    <img src={paymentPNG}></img>
+                                    <Link to="/view-profile">
+                                    <img src={addpropic}></img>
                                     <div className="picname">
                                         <h4>Profile</h4>
                                     </div>

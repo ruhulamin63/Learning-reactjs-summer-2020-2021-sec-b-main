@@ -174,7 +174,7 @@ function CustomerNavbar(props) {
                   <div className="photo">
                     <img
                       alt="..."
-                      src={require("../../../black/img/anime3.png").default}
+                      src={require("../../../black/img/officer/hello.jpeg").default}
                     />
                   </div>
                   <b className="caret d-none d-lg-block d-xl-block" />
@@ -182,14 +182,14 @@ function CustomerNavbar(props) {
                 </DropdownToggle>
                 <DropdownMenu className="dropdown-navbar" right tag="ul">
                   <NavLink tag="li">
-                    <DropdownItem className="nav-item">Profile</DropdownItem>
+                  <Link to="/view-profile"><DropdownItem className="nav-item">Profile</DropdownItem></Link>
                   </NavLink>
                   <NavLink tag="li">
-                    <DropdownItem className="nav-item">Settings</DropdownItem>
+                  <Link to="/view-profile"><DropdownItem className="nav-item">Settings</DropdownItem></Link>
                   </NavLink>
                   <DropdownItem divider tag="li" />
                   <NavLink tag="li">
-                <Link to='/login'><DropdownItem className="nav-item">Log out</DropdownItem></Link>
+                    <DropdownItem className="nav-item" onClick={handleLogout} >Log out</DropdownItem>
                     
                   </NavLink>
                 </DropdownMenu>

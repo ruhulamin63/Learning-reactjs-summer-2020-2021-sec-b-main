@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Http\Requests\LoginUserRequest;
+use Illuminate\Support\Facades\DB;
 use App\Models\Loginuser;
 use App\Models\Customer;
 use App\Models\Admin;
@@ -55,65 +56,61 @@ class LoginController extends Controller
     public function verify(LoginUserRequest $req){
 
         
-            $user_status = Loginuser::where('email',$req->email)
+            $status = Loginuser::where('email',$req->email)
             ->where('password',$req->password)
             ->first();
            
-        if($user_status)
+        if($status)
         { 
-
-            return response()->json([
-                'status' => 400,
-                'user_status'=>$user_status,
-                'message' => 'Login Successfully',
-            ]);
-
-        //    $type= $status->type;
+            $type= $status->type;
             
-        //     if ($type == "customer")
-        //     {
-        //         $customer = Customer::where('email',$req->email)
-        //         ->first();
-        //         //dd($customer);
-        //         return response()->json([
-        //             'status' => 400,
-        //             'customers'=>$customer,
-        //             'message' => 'Login Successfully',
-        //         ]);
-        //     }
-        //     elseif ($type == "agent")
-        //     {
-        //         $agent = Agent::where('email',$req->email)
-        //         ->first();
+            if ($type == "customer")
+            {
+                $customer = Customer::where('email',$req->email)
+                ->first();
+                return response()->json([
+                    'status' => 400,
+                    'user_status'=>$customer,
+                    'message' => 'Login Successfully',
+                ]);
                 
-        //         return response()->json([
-        //             'status' => 400,
-        //             'agents'=>$agent,
-        //             'message' => 'Login Successfully',
-        //         ]);
-        //     } 
-        //     elseif ($type == "admin")
-        //     {   
-        //         $admin = Admin::where('email',$req->email)
-        //         ->first();
 
-        //         return response()->json([
-        //             'status' => 400,
-        //             'admins'=>$admin,
-        //             'message' => 'Login Successfully',
-        //         ]);
+            }
+            elseif ($type == "agent")
+            {
+                $agent = Agent::where('email',$req->email)
+                ->first();
+                return response()->json([
+                    'status' => 400,
+                    'user_status'=>$agent,
+                    'message' => 'Login Successfully',
+                ]);
+                
+               
+            } 
+            elseif ($type == "admin")
+            {   
+                $admin = Admin::where('email',$req->email)
+                ->first();
+                return response()->json([
+                    'status' => 400,
+                    'user_status'=>$admin,
+                    'message' => 'Login Successfully',
+                ]);
+                
+               
+            }else if ($type == "officer")
+            {   
+                $officer = Officer::where('email',$req->email)
+                ->first();
+                return response()->json([
+                    'status' => 200,
+                    'user_status'=>$officer,
+                    'message' => 'Login Successfully',
+                ]);
+               
 
-        //     }elseif ($type == "officer")
-        //     {   
-        //         $officer = Officer::where('email',$req->email)
-        //         ->first();
-
-        //         return response()->json([
-        //             'status' => 400,
-        //             'officers'=>$officer,
-        //             'message' => 'Login Successfully',
-        //         ]);
-        //     }
+            }
             
         }else{
             
@@ -121,68 +118,5 @@ class LoginController extends Controller
                 'not_found' => 'Data Not Found',
             ]);
         }
-
-            
-
-        
-        
      }
 }
-/*public function Login(Request $request)
-    {
-
-        $validator = Validator::make($request->all(), [
-            'login_email' => 'required|email|max:50',
-            'login_password' => [
-                'required',
-                'min:8', 
-                'max:20', 
-            ],
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->with([
-                'error' => true,
-                'message' => 'Required data missing.'
-            ]);
-        }else{
-            $password=md5($request->input('login_password'));
-
-            $user=DB::table('userinfos')
-            ->where('email',$request->input('login_email'))
-            ->where('status',1)
-            ->first();
-            
-            if($user){
-
-                if($user->password == $password){
-
-                    if($user->type == 1){
-                        return redirect('/admin/dashboard');
-                    }elseif($user->type == 2){
-                        return redirect('/org/dashboard');
-                    }elseif($user->type == 3){
-                        return redirect('/sp/dashboard');
-                    }elseif($user->type == 4){
-                        return redirect('/');
-                    }else{
-                        return redirect()->back()->with([
-                            'error' => true,
-                            'message' => 'Something going wrong'
-                        ]);
-                    }
-                }else{
-                    return redirect()->back()->with([
-                        'error' => true,
-                        'message' => 'user email or password not matched'
-                    ]);
-                }
-
-            }else{
-                return redirect()->back()->with([
-                    'error' => true,
-                    'message' => 'user Not found!'
-                ]);
-            }
-        }
-    }*/

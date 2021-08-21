@@ -21,15 +21,23 @@ class CheckTransactionStatus
         if($request->session()->get('type')=="customer"){
             $customer = Customer::where('email',$request->session()->get('email'))
             ->first();
-            if ($customer->transaction_status=='1')
+            if ($customer->transaction_status=='unblocked')
             {
                 return $next($request);
             }
-            if ($customer->transaction_status=='0')
+            if ($customer->transaction_status=='blocked')
             {
-                return back()->with('transaction',"Transaction is blocked. Contact with Customer Service") ;
+                return response()->json([
+                    'status' => 240,
+                    'message' => "Transaction is blocked. Contact with Customer Service",
+
+                ]);
             }else{
-                return back()->with('transaction',"Something is wrong with your transaction status") ;
+                return response()->json([
+                    'status' => 240,
+                    'message' => "Something is wrong with your transaction status",
+
+                ]);
             }
             
         } if($request->session()->get('type')=="agent"){
@@ -38,15 +46,27 @@ class CheckTransactionStatus
             if ($agent->transaction_status=='1')
             {
                 return $next($request);
-            } if ($agent->transaction_status=='0')
+            }if ($agent->transaction_status=='blocked')
             {
-                return back()->with('transaction',"Transaction is blocked. Contact with Customer Service") ;
+                return response()->json([
+                    'status' => 240,
+                    'message' => "Transaction is blocked. Contact with Customer Service",
+
+                ]);
             }else{
-                return back()->with('transaction',"Something is wrong with your transaction status") ;
+                return response()->json([
+                    'status' => 240,
+                    'message' => "Something is wrong with your transaction status",
+
+                ]);
             }
             
         }else{
-            return back()->with('transaction', 'Please Contact to Customer Service');
+            return response()->json([
+                'status' => 240,
+                'message' => "Please Contact to Customer Service",
+
+            ]);
             
         }
         

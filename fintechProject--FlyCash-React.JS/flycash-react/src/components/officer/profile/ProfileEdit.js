@@ -94,9 +94,9 @@ class ProfileEdit extends Component {
                     <div class="card ">
                     <div class="card-header">
 
-                        <h4>Customer Edit Page</h4>
-                    </div>
-
+                        <h4>Officer Edit Page</h4>
+                    </div>  
+                    <Link to={'/view-profile'} className="btn btn-primary btn-sm float-end">Back</Link>
                         <div className="card-body">
 
                             <form onSubmit={this.updateOfficer}>
@@ -125,15 +125,12 @@ class ProfileEdit extends Component {
                                     <lebel>Type</lebel>
                                     <input type="text" name="type" value={this.state.type} className="form-control"  onChange={this.handleInput}/>
                                 </div>
-
-                                <div className="form-group mb-3">
-                                    <button type="submit" id="updatebtn" className="btn btn-primary btn-sm float-end">Update</button>
-                                    <Link to={'/view-profile'} className="btn btn-primary btn-sm float-end">Back</Link>
-                                </div>
+                                <button type="submit" id="updatebtn" className="btn btn-primary btn-sm float-end">Update</button>
                             </form>
                         </div>
                     </div>
                 </div>
+                    
                 </div>
             </div>
             </div>

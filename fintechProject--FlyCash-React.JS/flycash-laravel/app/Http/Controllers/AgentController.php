@@ -70,6 +70,13 @@ class AgentController extends Controller
             'status' => 200,
             'agents' => $agent
         ]);
+
+        //$users = Officer::orderBy('id','DESC')->get(); //change Officer to (Agent)->tablename
+
+        return response()->json([
+            'status' => 200,
+            'agents' => $agent
+        ]);
     }
 // ============================ End Destroy ====================================
 

@@ -1,6 +1,7 @@
 // nodejs library that concatenates classes
 import classNames from "classnames";
 import React from "react";
+import { Link } from "react-router-dom";
 // reactstrap components
 import {
   Button,
@@ -21,7 +22,17 @@ import {
   UncontrolledDropdown,
 } from "reactstrap";
 
+import { useHistory } from "react-router-dom";
+import { removeUserSession } from "../../auth/connect/getSession";
+
 function CustomerNavbar(props) {
+
+  let history = useHistory();
+  const handleLogout = () => {
+    removeUserSession();
+     history.push('/login');
+}
+
   const [collapseOpen, setcollapseOpen] = React.useState(false);
   const [modalSearch, setmodalSearch] = React.useState(false);
   const [color, setcolor] = React.useState("navbar-transparent");
@@ -143,14 +154,24 @@ function CustomerNavbar(props) {
                 </DropdownToggle>
                 <DropdownMenu className="dropdown-navbar" right tag="ul">
                   <NavLink tag="li">
-                    <DropdownItem className="nav-item">Profile</DropdownItem>
+                  <Link to="/customer-profile">
+                  <DropdownItem className="nav-item">Profile</DropdownItem>
+                    </Link>
+                    
                   </NavLink>
                   <NavLink tag="li">
+                  <Link to="/customer-change-password">
+                  <DropdownItem className="nav-item">Change Password</DropdownItem>
+                    </Link>
+                    
+                  </NavLink>
+                  <NavLink tag="li">
+                   
                     <DropdownItem className="nav-item">Settings</DropdownItem>
                   </NavLink>
                   <DropdownItem divider tag="li" />
                   <NavLink tag="li">
-                    <DropdownItem className="nav-item">Log out</DropdownItem>
+                    <DropdownItem className="nav-item" onClick={handleLogout} >Log out</DropdownItem>
                   </NavLink>
                 </DropdownMenu>
               </UncontrolledDropdown>

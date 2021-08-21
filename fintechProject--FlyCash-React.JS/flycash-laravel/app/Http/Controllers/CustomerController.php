@@ -6,13 +6,91 @@ use Illuminate\Http\Request;
 use App\Models\Officer;
 use App\Models\Customer;
 use App\Models\Customerstransaction;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\EditProfileRequest;
 use Illuminate\Support\Facades\DB; //Import query builser 
 
 
 class CustomerController extends Controller
 {
+    
+    public function updateCustomer(Request $req)
+    {
+        $validator = Validator::make($req->all(), [
+            'name' => 'required|min:3|max:30|alpha',
+            'phone' => 'required|min:11|numeric',
+        ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'error'=> $validator->errors(),
+                ]);
+            }else{
+                $customer= Customer::where('email',$req->email)
+                ->first();
+                $customer->phone = $req->phone;
+                $customer->name = $req->name;
+                $customer->save();
+                if($customer){
+                    $newData = Customer::where('email', $req->email)
+                    ->first();
+                    return response()->json([
+                        'status' => 200,
+                        'user_status' => $newData,
+                        'message' => "Profile Updated",
+                    ]);
+                }
+                else{
+                    return response()->json([
+                        'status' => 240,
+                        'message' => "Error",
+                    ]);
+
+                }
+            }
+       
+    }
+// ============================ End Edit ====================================
+
+    public function update(Request $req, $id)
+    {
+        $customer = Customer::find($id);
+        
+        $customer->phone = $req->input('phone');
+        $customer->nid = $req->input('nid');
+        $customer->dob = $req->input('dob');
+        $customer->type = $req->input('type');
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'error'=> $validator->errors(),
+                ]);
+            }else{
+                $customer= Customer::where('email',$req->email)
+                ->first();
+                $customer->phone = $req->phone;
+                $customer->name = $req->name;
+                $customer->save();
+                if($customer){
+                    $newData = Customer::where('email', $req->email)
+                    ->first();
+                    return response()->json([
+                        'status' => 200,
+                        'user_status' => $newData,
+                        'message' => "Profile Updated",
+                    ]);
+                }
+                else{
+                    return response()->json([
+                        'status' => 240,
+                        'message' => "Error",
+                    ]);
+
+                }
+            }
+       
+    }
+    //******************************Officer function************************* */
     public function show()
     {
         $customer= Customer::all(); //change Officer to (Customer)->tablename
@@ -44,41 +122,25 @@ class CustomerController extends Controller
     }
 // ============================ End Edit ====================================
 
-    public function update(Request $req, $id)
-    {
-        $customer = Customer::find($id);
-        
-        $customer->phone = $req->input('phone');
-        $customer->nid = $req->input('nid');
-        $customer->dob = $req->input('dob');
-        $customer->type = $req->input('type');
-
-        $customer->update();
-
-        return response()->json([
-            'status' => 200,
-            'message' => 'Customer Update Successfully',
-        ]);
-    }
-
-    // ============================ End Update ====================================
-
-    public function delete($id){
   
-        $users = Customer::find($id); //change model name
-        
-        return view('pages.officer.customer.delete')->with('user', $users);
-    }
-// ============================ End Delete ====================================
+public function updateAgent(Request $req, $id)
+{
+    $customer = Customer::find($id);
+    
+    $customer->phone = $req->input('phone');
+    $customer->nid = $req->input('nid');
+    $customer->dob = $req->input('dob');
+    $customer->type = $req->input('type');
 
-    public function destroy($id){
+    $customer->update();
 
-        $users = Customer::find($id);
-        $users->delete();
+    return response()->json([
+        'status' => 200,
+        'message' => 'Customer Update Successfully',
+    ]);
+}
 
-         return redirect()->route('customer_delete');
-    }
-// ============================ End Destroy ====================================
+// ============================ End Update ====================================
 
 //===========================Officer get transaction for customer=================================
 
@@ -144,52 +206,5 @@ class CustomerController extends Controller
                 'message' => 'Not updated',
             ]);
         }
-    }
-
-//======================================End Officer Function========================================
-
-    public function editCustomer(){
-
-        return view('profile.edit');
-
-
-    }
-    public function editCustomerdone(){
-
-        return view('profile.edit');
-
-
-    }
-    public function changeCustomerPassword(){
-
-        return view('pages.customer.profile.passwordChange');
-    }
-    public function editCustomerProfile(){
-
-        return view('pages.customer.profile.edit');
-    }
-    public function changeCustomerPasswordDone(EditProfileRequest $req){
-
-        if ($req->session()->get('password')==$req-> old_password)
-        {
-            if ($req->password== $req->password_confirmation)
-            {
-                dd($req);
-                $email=$req->session()->get('email');
-                $customer = Customer::where('email',$email)
-                ->first();
-                $customer->password = $req->password;
-                $customer->save();
-                return back()->with('msg','Password Changed') ;
-
-            }else{
-                return back()->with('msg','New password and confirm password does not match') ;
-            }
-
-        }else{
-            return back()->with('msg','Current Password does not match') ;
-                    
-        }
-
     }
 }

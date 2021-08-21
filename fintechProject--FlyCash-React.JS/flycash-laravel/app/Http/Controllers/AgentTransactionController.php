@@ -1,107 +1,193 @@
 <?php
 
 namespace App\Http\Controllers;
+use Validator;
+use App\Http\Requests\TransactionRequest;
+use Illuminate\Http\Request;
+use App\Models\Agentstransaction;
+use App\Models\Agent;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 
 class AgentTransactionController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-   
+    public function index()
+    {
+        $email='Borno@gmail.com';
+        $agent= DB::table('agentstransactions')->where('email', '=', $email)->get();
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\View\View
-     */
-        // Route::get('cashin', ['as' => 'pages.transaction.cashin', 'uses' => 'App\Http\Controllers\transactionController@cashin']);
-		// Route::get('cashout', ['as' => 'pages.transaction.cashin', 'uses' => 'App\Http\Controllers\transactionController@cashout']);
-		// Route::get('requestmoney', ['as' => 'pages.transaction.cashin', 'uses' => 'App\Http\Controllers\transactionController@requestmoney']);
-		// Route::get('paybill', ['as' => 'pages.transaction.cashin', 'uses' => 'App\Http\Controllers\transactionController@paybill']);
-		// Route::get('bkash', ['as' => 'pages.transaction.cashin', 'uses' => 'App\Http\Controllers\transactionController@bkash']);
-		// Route::get('nagad', ['as' => 'pages.transaction.cashin', 'uses' => 'App\Http\Controllers\transactionController@nagad']);
-		// Route::get('rocket', ['as' => 'pages.transaction.cashin', 'uses' => 'App\Http\Controllers\transactionController@rocket']);
-		// Route::get('upay', ['as' => 'pages.transaction.cashin', 'uses' => 'App\Http\Controllers\transactionController@upay']);
-		// Route::get('surecash', ['as' => 'pages.transaction.cashin', 'uses' => 'App\Http\Controllers\transactionController@surecash']);
-		// Route::get('bankcard', ['as' => 'pages.transaction.cashin', 'uses' => 'App\Http\Controllers\transactionController@bankcard']);
-    
-    public function cashin()
-    {
-        return view('pages.agent.transaction.cashin');
+        return response()->json($agent);
     }
-    public function cashout()
+
+    public function test(Request $req)
     {
-        return view('pages.agent.transaction.cashout');
+        $a = $req->phone;
+        return response()->json([
+            'status' => 240,
+            'message' => $a,
+        ]);
     }
-    public function requestmoney()
+
+
+    public function agentTransaction(Request $req)
     {
-        return view('pages.agent.transaction.requestmoney');
+
+        $validator = Validator::make($req->all(), [
+            'phone' => 'required',
+            'amount' => 'required',
+            'password' => 'required'
+            
+
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'error'=> $validator->errors()
+            ]);
+        } else {
+
+
+        $status = Agent::where('email', $req->email)
+            ->where('password', $req->password)
+            ->first();
+        $transaction_type = $req->transaction_type;
+        $email = $req->email;
+        $phone = $req->phone;
+
+        $balance = $status->balance;
+        $profit = $status->profit;
+        $amount = $req->amount;
+
+        if ($status) {
+            if (
+                $transaction_type == "Request Money" || 
+                $transaction_type == "Add Money(Bkash)" || 
+                $transaction_type == "Add Money(Nagad)" || 
+                $transaction_type == "Add Money(Rocket)" || 
+                $transaction_type == "Add Money(SureCash)" || 
+                $transaction_type == "Add Money(Upay)" || 
+                $transaction_type == "Add Money(Card)" ) 
+                {
+
+                $agent = Agent::where('email', $email)
+                    ->first();
+                $newbalance = $balance + $req->amount;
+                $balance = $newbalance;
+                $newprofit = $profit + $req->amount * '0.05';
+                $profit = $newprofit;
+
+                $agent->balance = $balance;
+                
+                $agent->profit = $profit;
+
+                $agent->save();
+
+
+                $transaction = new Agentstransaction();
+                $transaction->phone = $phone;
+                $transaction->email = $email;
+                $transaction->transaction_type = $transaction_type;
+                $transaction->amount = $amount;
+                $transaction->balance = $balance;
+                $transaction->profit = $profit;
+                $transaction->date = now();
+                $transaction->save();
+                if ($transaction) {
+                    $agent = Agent::where('email', $email)
+                        ->first();
+                    return response()->json([
+                        'status' => 200,
+                        'user_status' => $agent,
+                        'message' => "Transaction Successful",
+
+                    ]);
+
+                } else {
+
+                    return response()->json([
+                        'status' => 240,
+                        "balance" => $balance,
+                        "profit" => $profit,
+                        'message' => "Transaction Unsuccessful",
+                    ]);
+
+                }
+
+            } elseif ($transaction_type == "Cash In" || $transaction_type == "Cash out" || $transaction_type == "Mobile Recharge" || $transaction_type == "Pay Bill") {
+
+                $agent = Agent::where('email', $email)
+                    ->first();
+                $newbalance = $balance - $req->amount;
+                $balance = $newbalance;
+                $newprofit = $profit + $req->amount * '0.05';
+                $profit = $newprofit;
+
+
+                $agent->balance = $balance;
+
+                $agent->profit = $profit;
+
+                $agent->save();
+
+                $transaction = new Agentstransaction();
+                $transaction->phone = $phone;
+                $transaction->email = $email;
+                $transaction->transaction_type = $transaction_type;
+                $transaction->amount = $amount;
+                $transaction->balance = $balance;
+                $transaction->profit = $profit;
+                $transaction->date = now();
+                $transaction->save();
+                if ($transaction) {
+                    $agent = Agent::where('email', $email)
+                        ->first();
+                    return response()->json([
+                        'status' => 200,
+                        'user_status' => $agent,
+                        'message' => "Transaction Successful",
+
+                    ]);
+
+                } else {
+
+                    return response()->json([
+                        'status' => 240,
+                        "balance" => $balance,
+                        "profit" => $profit,
+                        'message' => "Transaction Unsuccessful",
+                    ]);
+
+                }
+
+            }else{
+                return response()->json([
+                    'status' => 240,
+                    'message' => "unknown error",
+                ]);
+
+            }
+
+            
+
+            } else {
+
+                return response()->json([
+                    'status' => 240,
+                    'message' => "password does not match",
+                ]);
+
+            }
+        }
     }
-    public function paybill()
-    {
-        return view('pages.agent.transaction.paybill');
-    }
-    public function bkash()
-    {
-        return view('pages.agent.transaction.bkash');
-    }
-    public function nagad()
-    {
-        return view('pages.agent.transaction.nagad');
-    }
-    public function rocket()
-    {
-        return view('pages.agent.transaction.rocket');
-    }
-    public function upay()
-    {
-        return view('pages.agent.transaction.upay');
-    }
-    public function surecash()
-    {
-        return view('pages.agent.transaction.surecash');
-    }
-    public function bankcard()
-    {
-        return view('pages.agent.transaction.bankcard');
-    }
-    public function recharge()
-    {
-        return view('pages.agent.transaction.recharge');
-    }
-    public function addmoney()
-    {
-        return view('pages.agent.addmoney');
-    }
-    public function transactionlist()
-    {
-        return view('pages.agent.transactionlist');
-    }
-    public function notifications()
-    {
-        return view('pages.notifications');
-    }
-    public function upgrade()
-    {
-        return view('pages.upgrade');
-    }
-    public function feedback()
-    {
-        return view('pages.agent.feedback');
-    }
-    public function adduser()
-    {
-        return view('pages.agent.adduser');
-    }
-    public function view()
-    {
-        return view('pages.agent.view');
-    }
-    public function chat()
-    {
-        return view('pages.agent.chat');
-    }
-    
 }
+
+
+
+
+
+
+
+
+
+

@@ -360,6 +360,7 @@ progress {
   -webkit-appearance: none;
 }
 
+
 [type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
@@ -18715,7 +18716,7 @@ textarea.form-control {
   padding: 0 12px;
 }
 
-.form-group input[type="file"] {
+.dp input[type="file"] {
   opacity: 0;
   position: absolute;
   top: 0;
@@ -19722,7 +19723,7 @@ textarea.form-control {
   .has-success.input-group-focus
   .input-group-prepend
   .input-group-text {
-  border-color: #00bf9a;
+    border-color: #00bf9a;
 }
 .card.card-plain {
   background: transparent;
@@ -19852,11 +19853,27 @@ textarea.form-control {
 }
 .card-user .author .block.block-one {
   background: rgb(45, 206, 137, 0.6);
- 
-  background: -webkit-linear-gradient(to right, rgb(45, 206,137, 0.6) 0%, rgba(17, 205, 239) 100%);
-  background: -o-linear-gradient(to right, rgb(45, 206,137, 0.6) 0%, rgba(17, 205, 239) 100%);
-  background: -moz-linear-gradient(to right, rgb(45, 206,137, 0.6) 0%, rgba(17, 205, 239) 100%);
-  background: linear-gradient(to right, rgb(45, 206,137, 0.6) 0%, rgba(17, 205, 239) 100%);
+
+  background: -webkit-linear-gradient(
+    to right,
+    rgb(45, 206, 137, 0.6) 0%,
+    rgba(17, 205, 239) 100%
+  );
+  background: -o-linear-gradient(
+    to right,
+    rgb(45, 206, 137, 0.6) 0%,
+    rgba(17, 205, 239) 100%
+  );
+  background: -moz-linear-gradient(
+    to right,
+    rgb(45, 206, 137, 0.6) 0%,
+    rgba(17, 205, 239) 100%
+  );
+  background: linear-gradient(
+    to right,
+    rgb(45, 206, 137, 0.6) 0%,
+    rgba(17, 205, 239) 100%
+  );
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=10);
   -webkit-transform: rotate(150deg);
   -moz-transform: rotate(150deg);
@@ -19868,10 +19885,26 @@ textarea.form-control {
 }
 .card-user .author .block.block-two {
   background: rgb(45, 206, 137, 0.6);
-  background: -webkit-linear-gradient(to right, rgb(45, 206,137, 0.6) 0%, rgba(17, 205, 239) 100%);
-  background: -o-linear-gradient(to right, rgb(45, 206,137, 0.6) 0%, rgba(17, 205, 239) 100%);
-  background: -moz-linear-gradient(to right, rgb(45, 206,137, 0.6) 0%, rgba(17, 205, 239) 100%);
-  background: linear-gradient(to right, rgb(45, 206,137, 0.6) 0%, rgba(17, 205, 239) 100%);
+  background: -webkit-linear-gradient(
+    to right,
+    rgb(45, 206, 137, 0.6) 0%,
+    rgba(17, 205, 239) 100%
+  );
+  background: -o-linear-gradient(
+    to right,
+    rgb(45, 206, 137, 0.6) 0%,
+    rgba(17, 205, 239) 100%
+  );
+  background: -moz-linear-gradient(
+    to right,
+    rgb(45, 206, 137, 0.6) 0%,
+    rgba(17, 205, 239) 100%
+  );
+  background: linear-gradient(
+    to right,
+    rgb(45, 206, 137, 0.6) 0%,
+    rgba(17, 205, 239) 100%
+  );
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=10);
   -moz-transform: rotate(30deg);
   -ms-transform: rotate(30deg);
@@ -19882,10 +19915,26 @@ textarea.form-control {
 }
 .card-user .author .block.block-three {
   background: rgb(45, 206, 137, 0.6);
-  background: -webkit-linear-gradient(to right, rgb(45, 206,137, 0.6) 0%, rgba(17, 205, 239) 100%);
-  background: -o-linear-gradient(to right, rgb(45, 206,137, 0.6) 0%, rgba(17, 205, 239) 100%);
-  background: -moz-linear-gradient(to right, rgb(45, 206,137, 0.6) 0%, rgba(17, 205, 239) 100%);
-  background: linear-gradient(to right, rgb(45, 206,137, 0.6) 0%, rgba(17, 205, 239) 100%);
+  background: -webkit-linear-gradient(
+    to right,
+    rgb(45, 206, 137, 0.6) 0%,
+    rgba(17, 205, 239) 100%
+  );
+  background: -o-linear-gradient(
+    to right,
+    rgb(45, 206, 137, 0.6) 0%,
+    rgba(17, 205, 239) 100%
+  );
+  background: -moz-linear-gradient(
+    to right,
+    rgb(45, 206, 137, 0.6) 0%,
+    rgba(17, 205, 239) 100%
+  );
+  background: linear-gradient(
+    to right,
+    rgb(45, 206, 137, 0.6) 0%,
+    rgba(17, 205, 239) 100%
+  );
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=10);
   -webkit-transform: rotate(170deg);
   -moz-transform: rotate(170deg);
@@ -19897,10 +19946,26 @@ textarea.form-control {
 }
 .card-user .author .block.block-four {
   background: rgb(45, 206, 137, 0.6);
-  background: -webkit-linear-gradient(to right, rgb(45, 206,137, 0.6) 0%, rgba(17, 205, 239) 100%);
-  background: -o-linear-gradient(to right, rgb(45, 206,137, 0.6) 0%, rgba(17, 205, 239) 100%);
-  background: -moz-linear-gradient(to right, rgb(45, 206,137, 0.6) 0%, rgba(17, 205, 239) 100%);
-  background: linear-gradient(to right, rgb(45, 206,137, 0.6) 0%, rgba(17, 205, 239) 100%);
+  background: -webkit-linear-gradient(
+    to right,
+    rgb(45, 206, 137, 0.6) 0%,
+    rgba(17, 205, 239) 100%
+  );
+  background: -o-linear-gradient(
+    to right,
+    rgb(45, 206, 137, 0.6) 0%,
+    rgba(17, 205, 239) 100%
+  );
+  background: -moz-linear-gradient(
+    to right,
+    rgb(45, 206, 137, 0.6) 0%,
+    rgba(17, 205, 239) 100%
+  );
+  background: linear-gradient(
+    to right,
+    rgb(45, 206, 137, 0.6) 0%,
+    rgba(17, 205, 239) 100%
+  );
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=10);
   -webkit-transform: rotate(150deg);
   -moz-transform: rotate(150deg);
@@ -19917,6 +19982,14 @@ textarea.form-control {
   border-bottom-color: transparent;
   background-color: transparent;
   position: relative;
+}
+.fileinput .btn {
+  vertical-align: middle;
+}
+.btn-file {
+  position: relative;
+  overflow: hidden;
+  vertical-align: middle;
 }
 .card-user .card-body {
   min-height: 240px;
@@ -19973,7 +20046,7 @@ textarea.form-control {
 select.form-control option {
   color: #888;
 }
-.full-page>.content {
+.full-page > .content {
   padding-bottom: 150px;
   padding-top: 150px;
 }
@@ -20003,4 +20076,73 @@ select.form-control option {
   margin-left: -5px;
   z-index: 1;
 }
+.btn {
+  display: block;
+  margin-left: auto;
+  position: relative;
+}
+.photo {
+  display: none;
+}
+.details {
+  display: none;
+}
+
+@media print {
+  .sidebar {
+    display: none;
+  }
+  .hideb{
+    display: none;
+  }
+  .main-panel .content {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: auto;
+  }
+
+  .photo {
+    height: 100px;
+    width: 250px;
+
+    display: block;
+    margin-left: auto;
+    position: relative;
+  }
+
+  .btn {
+    display: none;
+  }
+  .pdf th,
+  h3,
+  h4,td {
+    color: black !important;
+  }
+  .details {
+    margin-left: 30px;
+    display: block;
+  }
+  .pdf table tr th{
+    border-collapse: collapse;
+    border-style: solid black;
+    border-bottom: 2px solid black;
+    border: solid black;
+  }
+  .tablesorter td,
+  th {
+    border-style: solid black;
+    padding: 0.5rem;
+    text-align: center;
+  }
+  .card-title{
+    text-align: center;
+  }
+}
+
 /*# sourceMappingURL=black-dashboard-react.css.map */

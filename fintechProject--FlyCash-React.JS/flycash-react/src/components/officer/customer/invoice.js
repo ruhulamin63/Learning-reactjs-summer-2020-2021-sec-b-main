@@ -67,6 +67,8 @@ export class ComponentToPrint extends React.PureComponent {
                             <h4>Invoice pdf print
                                 <Link to={'/transaction-customer'} className="btn btn-primary btn-sm float-end">Back</Link>
                             </h4>
+                            {/* <button onClick={() => window.print()} align="center" type="submit" class="btn btn-fill btn-primary"> Print</button> */}
+                            {/* <h3 class="card-title"> Translation List</h3> */}
                         </div>
 
                         <div class="card-body">

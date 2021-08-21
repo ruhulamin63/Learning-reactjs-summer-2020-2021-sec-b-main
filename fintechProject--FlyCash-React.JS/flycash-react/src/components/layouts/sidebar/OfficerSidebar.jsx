@@ -28,22 +28,28 @@ const CustomersSidebar = () => {
             <div className="collapse show">
               <ul className="nav pl-4">
                 <li>
-                  <Link to="#">
+                  <Link to="show-customer">
                     <i className="tim-icons icon-coins"></i>
 
                     <p>Customers</p>
                   </Link>
                 </li>
                 <li>
-                  <Link to="#">
+                  <Link to="show-agent">
                     <i className="tim-icons icon-send"></i>
                     <p>Agents</p>
                   </Link>
                 </li>
                 <li>
-                  <Link to="#">
+                  <Link to="/customer-blocklist">
                     <i className="tim-icons icon-money-coins"></i>
-                    <p>Information</p>
+                    <p> Customer Block List</p>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/agent-blocklist">
+                    <i className="tim-icons icon-money-coins"></i>
+                    <p> Agent Block List</p>
                   </Link>
                 </li>
               </ul>
@@ -51,23 +57,23 @@ const CustomersSidebar = () => {
           </li>
 
           <li>
-            <Link to="#">
+            <Link to="/view-profile">
               <i className="tim-icons icon-single-02"></i>
               <p>Profile</p>
             </Link>
           </li>
-          <li>
-            <Link to="#">
+          {/* <li>
+            <Link to="#-">
               <i className="tim-icons icon-notes"></i>
               <p>Transaction List</p>
             </Link>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <Link to="#">
               <i className="tim-icons icon-notes"></i>
               <p>Block List</p>
             </Link>
-          </li>
+          </li> */}
         </ul>
       </div>
     </div>
